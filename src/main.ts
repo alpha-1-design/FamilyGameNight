@@ -269,6 +269,9 @@ class App {
       this.currentScreen = 'home';
       this.showScreen();
     });
+    settingsScreen.setOnLanguageChange(() => {
+      this.showScreen();
+    });
     this.container.appendChild(settingsScreen.render());
   }
 

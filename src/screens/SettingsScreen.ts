@@ -6,6 +6,7 @@ export class SettingsScreen {
   private container: HTMLElement | null = null;
   private storage: Storage;
   private onBack: (() => void) | null = null;
+  private onLanguageChange: (() => void) | null = null;
 
   constructor() {
     this.storage = new Storage();
@@ -13,6 +14,10 @@ export class SettingsScreen {
 
   setOnBack(callback: () => void): void {
     this.onBack = callback;
+  }
+
+  setOnLanguageChange(callback: () => void): void {
+    this.onLanguageChange = callback;
   }
 
   render(): HTMLElement {
@@ -25,9 +30,13 @@ export class SettingsScreen {
       <style>
         .settings-screen {
           min-height: 100vh;
+          height: 100vh;
+          overflow-y: auto;
           background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
           padding: 20px;
+          padding-bottom: 100px;
           color: #fff;
+          box-sizing: border-box;
         }
 
         .settings-header {
@@ -219,6 +228,23 @@ export class SettingsScreen {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: 8px;
+          max-height: 200px;
+          overflow-y: auto;
+          padding-right: 8px;
+        }
+
+        .language-selector::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .language-selector::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.1);
+          border-radius: 3px;
+        }
+
+        .language-selector::-webkit-scrollbar-thumb {
+          background: rgba(255,255,255,0.3);
+          border-radius: 3px;
         }
 
         .language-btn {
@@ -496,6 +522,8 @@ export class SettingsScreen {
           PROMPTS_DATA.setLanguage(lang);
           this.container?.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          this.showToast(`Language changed to ${TRANSLATIONS[lang as keyof typeof TRANSLATIONS]?.name || lang}`);
+          this.onLanguageChange?.();
         }
       });
     });

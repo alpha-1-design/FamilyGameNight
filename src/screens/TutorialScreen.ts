@@ -120,31 +120,32 @@ export class TutorialScreen {
         }
         
         .game-icon-large {
-          width: 100px;
-          height: 100px;
-          border-radius: var(--radius-xl);
+          width: 70px;
+          height: 70px;
+          border-radius: var(--radius-lg);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: var(--space-lg);
-          animation: bounce 2s ease-in-out infinite;
+          margin-bottom: var(--space-md);
+          font-size: 36px;
         }
         
         .game-icon-large svg {
-          width: 50px;
-          height: 50px;
+          width: 36px;
+          height: 36px;
           color: white;
         }
         
         .tutorial-title {
-          font-size: var(--font-size-2xl);
+          font-size: var(--font-size-xl);
           font-weight: var(--font-weight-bold);
           margin-bottom: var(--space-xs);
         }
         
         .tutorial-subtitle {
           color: var(--color-text-secondary);
-          margin-bottom: var(--space-xl);
+          margin-bottom: var(--space-md);
+          font-size: var(--font-size-sm);
         }
         
         .tutorial-slides {
@@ -152,6 +153,7 @@ export class TutorialScreen {
           width: 100%;
           position: relative;
           overflow: hidden;
+          min-height: 0;
         }
         
         .tutorial-slide {
@@ -163,6 +165,8 @@ export class TutorialScreen {
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: flex-start;
+          padding-top: var(--space-md);
           opacity: 0;
           transform: translateX(100%);
           transition: all var(--transition-normal);
@@ -178,55 +182,56 @@ export class TutorialScreen {
         }
         
         .slide-image {
-          width: 120px;
-          height: 120px;
-          border-radius: var(--radius-xl);
+          width: 80px;
+          height: 80px;
+          border-radius: var(--radius-lg);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: var(--space-lg);
+          margin-bottom: var(--space-md);
         }
         
         .slide-image svg {
-          width: 60px;
-          height: 60px;
+          width: 40px;
+          height: 40px;
           color: var(--color-primary);
         }
         
         .slide-title {
-          font-size: var(--font-size-lg);
+          font-size: var(--font-size-md);
           font-weight: var(--font-weight-semibold);
-          margin-bottom: var(--space-sm);
+          margin-bottom: var(--space-xs);
         }
         
         .slide-description {
           color: var(--color-text-secondary);
-          line-height: 1.6;
+          line-height: 1.5;
           max-width: 280px;
+          font-size: var(--font-size-sm);
         }
         
         .tutorial-dots {
           display: flex;
           gap: var(--space-sm);
-          margin: var(--space-lg) 0;
+          margin: var(--space-sm) 0;
         }
         
         .dot {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           border-radius: var(--radius-full);
           background: var(--color-text-muted);
           transition: all var(--transition-fast);
         }
         
         .dot.active {
-          width: 24px;
+          width: 18px;
           background: var(--color-primary);
         }
         
         .tutorial-footer {
-          padding: var(--space-lg);
-          padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0));
+          padding: var(--space-md);
+          padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0));
         }
         
         .btn {
@@ -234,10 +239,10 @@ export class TutorialScreen {
           align-items: center;
           justify-content: center;
           gap: var(--space-sm);
-          padding: var(--space-md) var(--space-lg);
-          border-radius: var(--radius-lg);
+          padding: var(--space-sm) var(--space-md);
+          border-radius: var(--radius-md);
           font-weight: var(--font-weight-semibold);
-          font-size: var(--font-size-md);
+          font-size: var(--font-size-sm);
           transition: all var(--transition-fast);
         }
         
@@ -246,7 +251,7 @@ export class TutorialScreen {
           color: white;
         }
         
-        .btn-large { padding: var(--space-lg); }
+        .btn-large { padding: var(--space-md); }
         
         .btn-full { width: 100%; }
         
