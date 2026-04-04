@@ -7,14 +7,14 @@ export class CopilotCharacter {
   private mood: CopilotMood = 'waiting';
   private onMoodChange: ((mood: CopilotMood) => void) | null = null;
   private messageTimeout: number | null = null;
-  private tipsMode: boolean = false;
+  private _tipsMode: boolean = false;
   private currentTipIndex: number = 0;
   private tips: string[] = [];
   private tipsInterval: number | null = null;
   private idleInterval: number | null = null;
   private breatheInterval: number | null = null;
   private isHovering: boolean = false;
-  private lastAction: string = '';
+  private _lastAction: string = '';
 
   constructor() {}
 
@@ -553,8 +553,8 @@ export class CopilotCharacter {
 
     if (bubble && text) {
       bubble.classList.add('visible');
-      text.style.opacity = '0';
-      typing!.style.display = 'flex';
+      (text as HTMLElement).style.opacity = '0';
+      (typing as HTMLElement).style.display = 'flex';
       
       this.setMood('thinking');
       
@@ -566,8 +566,8 @@ export class CopilotCharacter {
           charIndex++;
         } else {
           clearInterval(typeInterval);
-          typing!.style.display = 'none';
-          text.style.opacity = '1';
+          (typing as HTMLElement).style.display = 'none';
+          (text as HTMLElement).style.opacity = '1';
           this.setMood('happy');
         }
       }, typeSpeed);
@@ -583,7 +583,7 @@ export class CopilotCharacter {
   startTipsMode(tips: string[]): void {
     this.tips = tips;
     this.currentTipIndex = 0;
-    this.tipsMode = true;
+    this._tipsMode = true;
     this.updateTips();
     
     const tipsContainer = this.container?.querySelector('#tips-container');
@@ -649,7 +649,7 @@ export class CopilotCharacter {
   }
 
   stopTipsMode(): void {
-    this.tipsMode = false;
+    this._tipsMode = false;
     if (this.tipsInterval) {
       clearInterval(this.tipsInterval);
       this.tipsInterval = null;
@@ -706,7 +706,7 @@ export class CopilotCharacter {
   }
 
   spin(): void {
-    const avatar = this.container?.querySelector('.copilot-avatar');
+    const avatar = this.container?.querySelector('.copilot-avatar') as HTMLElement | null;
     if (avatar) {
       avatar.style.animation = 'none';
       avatar.offsetHeight;
@@ -718,7 +718,7 @@ export class CopilotCharacter {
   }
 
   react(action: string): void {
-    this.lastAction = action;
+    this._lastAction = action;
     
     switch (action) {
       case 'tap':

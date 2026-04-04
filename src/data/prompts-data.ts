@@ -1565,7 +1565,7 @@ export class PROMPTS_DATA {
 
   // WORD CHAIN STARTERS (100+)
   private static generateWordChainWords(): Prompt[] {
-    return [
+    const words = [
       'Apple', 'Elephant', 'Tiger', 'Rainbow', 'Waterfall', 'Lion', 'Night', 'Dream',
       'Mountain', 'River', 'Sunset', 'Thunder', 'Jungle', 'Gorilla', 'Galaxy', 'Yacht',
       'Treasure', 'Robot', 'Monkey', 'Yak', 'Kite', 'Eagle', 'Ladder', 'Rainbow',
@@ -1577,7 +1577,7 @@ export class PROMPTS_DATA {
       'Tapestry', 'Yodel', 'Nougat', 'Leprechaun', 'Echidna', 'Umbrella', 'Yachtsman', 'Mustache',
       'Horseshoe', 'Noodles', 'Egret', 'Yearbook', 'Tuxedo', 'Eyebrow', 'Yam', 'Rye bread',
       'Yacht', 'Tornado', 'Oboe', 'Egret', 'Nutmeg', 'Ukelele', 'Eyeball', 'Tadpole',
-      'Lobster', 'Ravioli', 'Eclair', 'Noodles', 'Underwear', 'Tutu', 'Yardstick', 'Elbow',
     ];
+    return words.map(w => ({ icon: '🔤', text: w }));
   }
 }

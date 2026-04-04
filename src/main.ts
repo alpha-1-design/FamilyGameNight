@@ -7,10 +7,10 @@ import { TutorialScreen } from './screens/TutorialScreen';
 import { GameScreen } from './screens/GameScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { LeaderboardScreen } from './screens/LeaderboardScreen';
-import { GameOverScreen, GameResult } from './screens/GameOverScreen';
+import { GameOverScreen, type GameResult } from './screens/GameOverScreen';
 import { CopilotCharacter, CopilotWelcome } from './components/Copilot';
-import { GameMode } from './games/GameManager';
-import { Storage, Player } from './utils/Storage';
+import { type GameMode } from './games/GameManager';
+import { Storage, type Player } from './utils/Storage';
 import { GAMES_DATA } from './data/games-data';
 
 type Screen = 'intro' | 'onboarding' | 'players' | 'hostselect' | 'home' | 'tutorial' | 'game' | 'settings' | 'leaderboard' | 'gameover';
@@ -85,11 +85,12 @@ class App {
   }
 
   private showOnboarding(): void {
-    const onboardingScreen = new OnboardingScreen();
-    onboardingScreen.setOnComplete(() => {
-      this.storage.setOnboarded(true);
-      this.currentScreen = 'players';
-      this.showScreen();
+    const onboardingScreen = new OnboardingScreen({
+      showScreen: (screen) => {
+        this.storage.setOnboarded(true);
+        this.currentScreen = screen as Screen;
+        this.showScreen();
+      }
     });
     this.container.appendChild(onboardingScreen.render());
   }

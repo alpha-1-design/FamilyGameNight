@@ -1,6 +1,6 @@
 import { ICONS } from '../utils/ICONS';
-import { Player } from '../utils/Storage';
-import { GameMode, gameManager, GameResult } from '../games/GameManager';
+import type { Player } from '../utils/Storage';
+import { type GameMode, type GameResult } from '../games/GameManager';
 import { GAMES_DATA } from '../data/games-data';
 import { CopilotCharacter } from '../components/Copilot';
 

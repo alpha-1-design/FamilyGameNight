@@ -1,5 +1,5 @@
 import { ICONS } from '../utils/ICONS';
-import { Storage, Player } from '../utils/Storage';
+import { Storage, type Player } from '../utils/Storage';
 
 export class PlayersScreen {
   private storage: Storage;
@@ -611,7 +611,7 @@ export class PlayersScreen {
       <div class="screen-footer">
         <button class="btn-primary" id="confirm-host-btn" disabled>
           <span>Start Game Night</span>
-          ${ICONS.Gamepad2}
+          ${ICONS.Gamepad}
         </button>
       </div>
     `;

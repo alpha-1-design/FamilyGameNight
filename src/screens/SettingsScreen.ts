@@ -425,14 +425,14 @@ export class SettingsScreen {
         <h3 class="section-title" style="color: #ff6b6b;">Danger Zone</h3>
         <div class="settings-card">
           <button class="danger-btn" data-action="reset-scores">
-            <div class="setting-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">${ICONS.Trash2}</div>
+            <div class="setting-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">${ICONS.Trash}</div>
             <div class="setting-text" style="text-align: left;">
               <h4>Reset All Scores</h4>
               <p>Clear all game scores and leaderboard</p>
             </div>
           </button>
           <button class="danger-btn" data-action="reset-tutorials">
-            <div class="setting-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">${ICONS.HelpCircle}</div>
+            <div class="setting-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);">${ICONS.Info}</div>
             <div class="setting-text" style="text-align: left;">
               <h4>Reset Tutorials</h4>
               <p>Show game tutorials again</p>

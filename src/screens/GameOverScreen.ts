@@ -1,7 +1,9 @@
 import { ICONS } from '../utils/ICONS';
-import { GameResult, gameManager } from '../games/GameManager';
+import { type GameResult } from '../games/GameManager';
 import { GAMES_DATA } from '../data/games-data';
-import { Player } from '../utils/Storage';
+import type { Player } from '../utils/Storage';
+
+export type { GameResult };
 
 export class GameOverScreen {
   private container: HTMLElement | null = null;
@@ -407,7 +409,7 @@ export class GameOverScreen {
 
   private getPlayerById(playerId: string): Player | null {
     const storage = new Storage();
-    return storage.getPlayers().find(p => p.id === playerId) || null;
+    return storage.getPlayers().find((p: Player) => p.id === playerId) || null;
   }
 
   private attachEventListeners(): void {

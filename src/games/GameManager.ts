@@ -1,5 +1,5 @@
-import { PROMPTS_DATA, Prompt } from '../data/prompts-data';
-import { Storage, Player } from '../utils/Storage';
+import { PROMPTS_DATA, type Prompt } from '../data/prompts-data';
+import { Storage, type Player } from '../utils/Storage';
 import { GAMES_DATA } from '../data/games-data';
 
 export type GameMode = 'truth' | 'dare' | 'challenge' | 'free';
@@ -51,7 +51,7 @@ export class GameManager {
     });
   }
 
-  private getPromptKey(gameId: string, mode: GameMode): string {
+  private getPromptKey(gameId: string, _mode: GameMode): string {
     const mapping: Record<string, string> = {
       'truth-or-dare': 'truthQuestions',
       'never-have-i-ever': 'neverHaveIEver',
