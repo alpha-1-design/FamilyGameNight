@@ -1,0 +1,24 @@
+import type { CapacitorConfig } from '@capacitor/cli';
+
+const config: CapacitorConfig = {
+  appId: 'com.familygamenight.app',
+  appName: 'Family Game Night',
+  webDir: 'dist',
+  server: {
+    androidScheme: 'https'
+  },
+  android: {
+    backgroundColor: '#0a0a0f',
+    allowMixedContent: true,
+    captureInput: true,
+    webContentsDebuggingEnabled: false
+  },
+  plugins: {
+    Haptics: {
+      enableVibrateFallback: true,
+      ignoreMissingSystemSettings: false
+    }
+  }
+};
+
+export default config;

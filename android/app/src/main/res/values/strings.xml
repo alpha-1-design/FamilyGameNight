@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Family Game Night</string>
+    <string name="title_activity_main">Family Game Night</string>
+    <string name="package_name">com.familygamenight.app</string>
+</resources>
