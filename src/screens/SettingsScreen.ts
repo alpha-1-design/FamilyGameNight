@@ -1,6 +1,6 @@
 import { ICONS } from '../utils/ICONS';
 import { Storage } from '../utils/Storage';
-import { TRANSLATIONS } from '../data/prompts-data';
+import { TRANSLATIONS, PROMPTS_DATA } from '../data/prompts-data';
 
 export class SettingsScreen {
   private container: HTMLElement | null = null;
@@ -576,7 +576,3 @@ export class SettingsScreen {
   }
 }
 
-const PROMPTS_DATA = {
-  getLanguage: () => localStorage.getItem('fgn_language') || 'en',
-  setLanguage: (lang: string) => localStorage.setItem('fgn_language', lang),
-};

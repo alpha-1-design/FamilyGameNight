@@ -1,7 +1,7 @@
 export class TutorialScreen {
   private app: { game: { getGameById: (id: string) => any }; showScreen: (screen: string, params?: any) => void };
   private gameId: string = '';
-  private container: HTMLElement;
+  private container: HTMLElement | null = null;
   private onComplete: (() => void) | null = null;
   private onSkip: (() => void) | null = null;
   private currentGame: any = null;
@@ -11,13 +11,11 @@ export class TutorialScreen {
       game: { getGameById: (id: string) => this.currentGame }, 
       showScreen: () => {} 
     };
-    this.container = this.render();
-  }
+      }
 
   setGame(game: any): void {
     this.currentGame = game;
     this.gameId = game?.id || '';
-    this.container = this.render();
   }
 
   setOnComplete(callback: () => void): void {

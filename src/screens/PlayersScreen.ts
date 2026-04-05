@@ -735,10 +735,10 @@ export class PlayersScreen {
     this.selectedColor = '#5B7FFF';
 
     const closeBtn = modal.querySelector('[data-action="modal-close"]');
-    closeBtn?.addEventListener('click', () => modal.classList.remove('active'));
+    closeBtn?.addEventListener('click', () => modal.classList.remove('active'), { once: true });
     modal.addEventListener('click', (e) => {
       if (e.target === modal) modal.classList.remove('active');
-    });
+    }, { once: true });
 
     colorOptions.forEach(opt => {
       opt.addEventListener('click', () => {
@@ -755,7 +755,7 @@ export class PlayersScreen {
         this.addPlayer(name);
         modal.classList.remove('active');
       }
-    });
+    }, { once: true });
 
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
@@ -765,7 +765,7 @@ export class PlayersScreen {
           modal.classList.remove('active');
         }
       }
-    });
+    }, { once: true });
   }
 
   private addPlayer(name: string): void {
@@ -777,6 +777,17 @@ export class PlayersScreen {
       avatar: avatars[Math.floor(Math.random() * avatars.length)]
     };
     this.players.push(player);
+    const isDupe = this.storage.getPlayers().some(
+      (p) => p.name.trim().toLowerCase() === player.name.trim().toLowerCase()
+    );
+    if (isDupe) {
+      const t = document.createElement('div');
+      t.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#FF6B6B;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;pointer-events:none;`;
+      t.textContent = `"${player.name}" is already added`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2000);
+      return;
+    }
     this.storage.addPlayer(player);
     this.refreshPlayerGrid();
   }
