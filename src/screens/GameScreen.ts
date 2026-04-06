@@ -1,5 +1,6 @@
 import { ICONS } from '../utils/ICONS';
 import { getGameIcon } from '../utils/GAME_ICONS';
+import { Storage } from '../utils/Storage';
 import type { Player } from '../utils/Storage';
 import { type GameMode, type GameResult } from '../games/GameManager';
 import { GAMES_DATA } from '../data/games-data';
@@ -292,6 +293,7 @@ function getTriviaBank(gameId: string): { q: string; a: string; options: string[
 // ─── Main GameScreen class ────────────────────────────────────────────────
 export class GameScreen {
   private container: HTMLElement | null = null;
+  private storage: Storage = new Storage();
   private game: typeof GAMES_DATA.games[0] | null = null;
   private players: Player[] = [];
   private hostId: string | null = null;
@@ -665,6 +667,7 @@ export class GameScreen {
     footer.querySelector('#gs-correct')?.addEventListener('click', () => {
       this.awardPoints(player.id, 10);
       this.copilot?.react('correct');
+      this.playSound('correct');
       this.goNext();
     });
     footer.querySelector('#gs-next')?.addEventListener('click', () => {
@@ -756,6 +759,7 @@ export class GameScreen {
         const loser = this.currentPlayer();
         this.awardPoints(loser.id, -5);
         this.copilot?.react('wrong');
+      this.playSound('wrong');
 
         const body = this.container?.querySelector('#gs-body') as HTMLElement;
         const footer = this.container?.querySelector('#gs-footer') as HTMLElement;
@@ -867,6 +871,7 @@ export class GameScreen {
           resultEl.className = 'gs-word-result correct';
           this.awardPoints(player.id, 10);
           this.copilot?.react('correct');
+      this.playSound('correct');
         } else {
           resultEl.textContent = `✗ Must start with "${lastLetter?.toUpperCase()}"`;
           resultEl.className = 'gs-word-result wrong';
@@ -888,10 +893,12 @@ export class GameScreen {
         resultEl.className = 'gs-word-result correct';
         this.awardPoints(player.id, 10);
         this.copilot?.react('correct');
+      this.playSound('correct');
       } else {
         resultEl.textContent = `✗ The answer was "${correct}" — try again!`;
         resultEl.className = 'gs-word-result wrong';
         this.copilot?.react('wrong');
+      this.playSound('wrong');
       }
     };
 
@@ -1095,6 +1102,7 @@ export class GameScreen {
       this.clearTimer();
       this.awardPoints(player.id, 10);
       this.copilot?.react('correct');
+      this.playSound('correct');
       this.goNext();
     });
     footer.querySelector('#gs-next')?.addEventListener('click', () => {
@@ -1113,6 +1121,7 @@ export class GameScreen {
       if (remaining <= 0) {
         this.clearTimer();
         this.copilot?.react('wrong');
+      this.playSound('wrong');
       }
     }, 1000);
   }
@@ -1155,6 +1164,7 @@ export class GameScreen {
     footer.querySelector('#gs-correct')?.addEventListener('click', () => {
       this.awardPoints(player.id, 10);
       this.copilot?.react('correct');
+      this.playSound('correct');
       this.goNext();
     });
     footer.querySelector('#gs-next')?.addEventListener('click', () => this.goNext());
@@ -1310,6 +1320,7 @@ export class GameScreen {
           if (footerNext) footerNext.style.display = 'flex';
           if (footerSkip) footerSkip.style.display = 'none';
           this.copilot?.react('correct');
+      this.playSound('correct');
         }
       }, 1000);
     });
@@ -1385,6 +1396,7 @@ export class GameScreen {
           }
         });
         this.copilot?.react('correct');
+      this.playSound('correct');
       });
     });
 
@@ -1441,8 +1453,10 @@ export class GameScreen {
         if (selected === q.a) {
           this.awardPoints(player.id, 10);
           this.copilot?.react('correct');
+      this.playSound('correct');
         } else {
           this.copilot?.react('wrong');
+      this.playSound('wrong');
         }
 
         const nextBtn = footer.querySelector('#gs-next') as HTMLElement;
@@ -1611,6 +1625,62 @@ export class GameScreen {
     });
   }
 
+
+  // ─── Sound Effects ──────────────────────────────────────────────────────────
+  private playSound(type: 'correct' | 'wrong' | 'tick' | 'complete' | 'start'): void {
+    const settings = this.storage.getSettings();
+    if (!settings.soundEnabled) return;
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g);
+      g.connect(ctx.destination);
+      const now = ctx.currentTime;
+      switch (type) {
+        case 'correct':
+          o.frequency.setValueAtTime(523, now);
+          o.frequency.setValueAtTime(659, now + 0.1);
+          o.frequency.setValueAtTime(784, now + 0.2);
+          g.gain.setValueAtTime(0.3, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          o.start(now); o.stop(now + 0.4);
+          break;
+        case 'wrong':
+          o.frequency.setValueAtTime(300, now);
+          o.frequency.setValueAtTime(200, now + 0.15);
+          g.gain.setValueAtTime(0.3, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          o.start(now); o.stop(now + 0.3);
+          break;
+        case 'tick':
+          o.frequency.setValueAtTime(800, now);
+          g.gain.setValueAtTime(0.1, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          o.start(now); o.stop(now + 0.05);
+          break;
+        case 'complete':
+          [523,659,784,1047].forEach((f, i) => {
+            const o2 = ctx.createOscillator();
+            const g2 = ctx.createGain();
+            o2.connect(g2); g2.connect(ctx.destination);
+            o2.frequency.setValueAtTime(f, now + i * 0.12);
+            g2.gain.setValueAtTime(0.25, now + i * 0.12);
+            g2.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.2);
+            o2.start(now + i * 0.12); o2.stop(now + i * 0.12 + 0.2);
+          });
+          break;
+        case 'start':
+          o.frequency.setValueAtTime(440, now);
+          o.frequency.setValueAtTime(880, now + 0.1);
+          g.gain.setValueAtTime(0.2, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          o.start(now); o.stop(now + 0.25);
+          break;
+      }
+    } catch (_) {}
+  }
+
   // ─── Copilot ──────────────────────────────────────────────────────────────
   private initCopilot(): void {
     this.copilot = new CopilotCharacter();
@@ -1631,6 +1701,7 @@ export class GameScreen {
 
     const engineTips = tips[this.engine] || tips['prompt-card'];
     setTimeout(() => {
+      this.playSound('start');
       this.copilot?.speak(`Let's play ${this.game?.name}! 🎮`);
       setTimeout(() => this.copilot?.startTipsMode(engineTips), 3000);
     }, 1000);

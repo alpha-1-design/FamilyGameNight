@@ -131,8 +131,8 @@ export class CopilotCharacter {
         }
 
         .copilot-avatar {
-          width: 72px;
-          height: 72px;
+          width: 44px;
+          height: 44px;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           border-radius: 50%;
           display: flex;
@@ -201,13 +201,13 @@ export class CopilotCharacter {
 
         .eyes {
           display: flex;
-          gap: 12px;
+          gap: 8px;
           margin-bottom: 4px;
         }
 
         .eye {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           background: #fff;
           border-radius: 50%;
           position: relative;
@@ -234,9 +234,9 @@ export class CopilotCharacter {
         }
 
         .mouth {
-          width: 16px;
-          height: 8px;
-          border-radius: 0 0 16px 16px;
+          width: 12px;
+          height: 6px;
+          border-radius: 0 0 12px 12px;
           background: #fff;
         }
 
@@ -307,7 +307,7 @@ export class CopilotCharacter {
         /* Glow effect */
         .copilot-glow {
           position: absolute;
-          inset: -10px;
+          inset: -6px;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           border-radius: 50%;
           opacity: 0.4;
@@ -344,14 +344,14 @@ export class CopilotCharacter {
         /* Speech bubble */
         .copilot-speech-bubble {
           position: absolute;
-          bottom: 90px;
+          bottom: 54px;
           right: -10px;
           background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
           border: 2px solid rgba(102, 126, 234, 0.6);
           border-radius: 20px;
           padding: 14px 18px;
-          max-width: 240px;
-          min-width: 160px;
+          max-width: 200px;
+          min-width: 120px;
           opacity: 0;
           transform: translateY(20px) scale(0.8);
           transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -411,7 +411,7 @@ export class CopilotCharacter {
         /* Tips sliding mode */
         .tips-container {
           position: absolute;
-          bottom: 95px;
+          bottom: 58px;
           right: -10px;
           width: 220px;
           height: 90px;

@@ -769,6 +769,18 @@ export class PlayersScreen {
   }
 
   private addPlayer(name: string): void {
+    // Check dupe against current session players BEFORE adding
+    const isDupe = this.players.some(
+      (p) => p.name.trim().toLowerCase() === name.trim().toLowerCase()
+    );
+    if (isDupe) {
+      const t = document.createElement('div');
+      t.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#FF6B6B;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;pointer-events:none;`;
+      t.textContent = `"${name}" is already added`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2000);
+      return;
+    }
     const avatars = ['😀', '😎', '🤪', '😇', '🥳', '😋', '🤩', '🥰', '😺', '🦊', '🐱', '🐶', '🦁', '🐼', '🐨'];
     const player: Player = {
       id: Date.now().toString(),
@@ -777,17 +789,6 @@ export class PlayersScreen {
       avatar: avatars[Math.floor(Math.random() * avatars.length)]
     };
     this.players.push(player);
-    const isDupe = this.storage.getPlayers().some(
-      (p) => p.name.trim().toLowerCase() === player.name.trim().toLowerCase()
-    );
-    if (isDupe) {
-      const t = document.createElement('div');
-      t.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#FF6B6B;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;pointer-events:none;`;
-      t.textContent = `"${player.name}" is already added`;
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 2000);
-      return;
-    }
     this.storage.addPlayer(player);
     this.refreshPlayerGrid();
   }

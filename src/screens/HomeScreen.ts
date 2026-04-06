@@ -48,6 +48,7 @@ export class HomeScreen {
           display: flex;
           flex-direction: column;
           height: 100%;
+          overflow: hidden;
           background: var(--gradient-bg);
         }
 
@@ -140,6 +141,10 @@ export class HomeScreen {
 
         .category-tab:active {
           transform: scale(0.97);
+        }
+
+        .home-header {
+          flex-shrink: 0;
         }
 
         .games-list {
